@@ -13,8 +13,6 @@ export default function ToDoList() {
   };
 
   let handleAddTask = () => {
-    console.log("clicked");
-    console.log(task);
     setTaskList((prevTasks) => [...prevTasks, task]);
     setTask("");
     if (taskInput.current !== null) {
@@ -22,9 +20,14 @@ export default function ToDoList() {
     }
   };
 
+  let handleAddTaskOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if(e.key === 'Enter' && e.currentTarget.value !== ''){
+        handleAddTask();
+    }
+  }
+
   let handleRemoveTask = (taskToRemove: string) => {
     const updatedTaskList = taskList.filter((task) => task !== taskToRemove);
-    console.log(updatedTaskList)
     setTaskList(updatedTaskList);
   };
 
@@ -40,16 +43,14 @@ export default function ToDoList() {
   }, []);
 
   useEffect(() => {
-    console.log("effect", taskList);
     if (!localStorage.myTasks) {
-      console.log("there is a mytasks");
       localStorage.setItem("myTasks", JSON.stringify([]));
     }
 
     if (taskList.length) {
       localStorage.setItem("myTasks", JSON.stringify(taskList));
-    }else{
-        localStorage.setItem("myTasks", JSON.stringify(taskList))
+    } else {
+      localStorage.setItem("myTasks", JSON.stringify(taskList));
     }
   }, [taskList]);
 
@@ -67,6 +68,7 @@ export default function ToDoList() {
           className="underline ml-2.5 text-center bg-cyan-800"
           type="text"
           placeholder="Enter task"
+          onKeyDown={handleAddTaskOnKeyDown}
           onChange={handleInput}
         />
       </div>
