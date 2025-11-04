@@ -17,8 +17,10 @@ export default function Header() {
   return (
     <header className="p-2.5 bg-gray-800 flex justify-between">
       <nav>
-        <ul>
+        <ul className="flex gap-2.5">
+          <Link href="/">Home</Link>
           <Link href="/context-api">Context API</Link>
+          <Link href="/sound-manager">Sound Manager</Link>
         </ul>
       </nav>
       <div className="flex gap-2.5">
